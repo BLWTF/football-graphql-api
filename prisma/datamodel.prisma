@@ -1,0 +1,5 @@
+type Prediction {
+    id: ID! @id
+    fixture: Int!
+    outcome: String!
+}

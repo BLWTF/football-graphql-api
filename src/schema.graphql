@@ -1,0 +1,88 @@
+type Query {
+    info: String!
+    team(id: ID!): Team
+    league(id: ID!, search: String): League
+    fixture(id: ID!): Fixture
+}
+
+type Team {
+    id: ID!
+    name: String!
+    code: String
+    logo: String!
+    country: String!
+    leagues: [League!]!
+    fixtures(league: ID): [Fixture!]!
+}
+
+type League {
+    id: ID!
+    name: String!
+    type: String!
+    country: String!
+    season: String!
+    season_start: String!
+    season_end: String!
+    logo: String!
+    code: String
+    teams: [Team!]!
+    fixtures(team: ID): [Fixture!]!
+}
+
+type Fixture {
+    id: ID!
+    league: League!
+    event_date: String!
+    firstHalfStart: Int!
+    secondHalfStart: Int!
+    homeTeam: Team!
+    awayTeam: Team!
+    goalsHomeTeam: Int
+    goalsAwayTeam: Int
+    score: Score
+    events: [Event]!
+    h2h: [Fixture]!
+    predictions: [Prediction]! 
+}
+
+type Score {
+    halftime: String!
+    fulltime: String!
+    extratime: String
+    penalty: String
+}
+
+type Event {
+    elapsed: Int
+    teamName: String
+    player_id: Int
+    player: String
+    type: String
+    detail: String
+}
+
+type Prediction {
+    id: ID!
+    fixture: Fixture!
+    outcome: Outcome!
+    postedBy: User!
+}
+
+type User{
+    id: ID!
+    username: String!
+    firstname: String!
+    lastname: String!
+    email: String!
+    password: String!
+    predictions: [Prediction!]!
+}
+
+enum Outcome {
+    WIN_HOME
+    WIN_AWAY
+    DRAW
+    DRAW_HALFTIME
+    WIN_HOME_HALFTIME
+    WIN_AWAY_FULLTIME
+}
